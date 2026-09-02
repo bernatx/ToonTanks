@@ -31,9 +31,14 @@ void UHealthComponent::DamageTaken(AActor* DamagedActor, float Damage, const UDa
         return;
     }
 
-    CurrentHealth = std::max(0.0f, CurrentHealth - Damage);
+    CurrentHealth = std::max(0.0f, CurrentHealth - ClampedDamage(Damage, CurrentHealth));
 
     if (CurrentHealth <= 0.0f && ToonTanksGameMode) {
         ToonTanksGameMode->ActorDied(DamagedActor);
     }
+}
+
+float UHealthComponent::ClampedDamage(float Damage, float CurrentHealthVal)
+{
+    return FMath::Clamp(Damage, 0.0f, CurrentHealthVal);
 }

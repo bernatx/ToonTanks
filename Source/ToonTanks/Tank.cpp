@@ -36,12 +36,14 @@ void ATank::BeginPlay()
 {
     Super::BeginPlay();
     bIsAlive = true;
+    bIsInitialized = false;
     TankPlayerController = GetController<APlayerController>();
 
     if (TankPlayerController) {
         if (UEnhancedInputLocalPlayerSubsystem* Subsystem = ULocalPlayer::GetSubsystem<UEnhancedInputLocalPlayerSubsystem>(TankPlayerController->GetLocalPlayer())) {
             Subsystem->AddMappingContext(DefaultMappingContext, 0);
         }
+        bIsInitialized = true;
     }
 }
 
@@ -49,7 +51,7 @@ void ATank::Tick(float DeltaTime)
 {
     Super::Tick(DeltaTime);
 
-    if (TankPlayerController) {
+    if (TankPlayerController && bIsInitialized) {
         FHitResult HitResult;
         TankPlayerController->GetHitResultUnderCursor(ECollisionChannel::ECC_Visibility,
                                                       false, HitResult);

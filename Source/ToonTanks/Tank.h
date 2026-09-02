@@ -35,41 +35,10 @@ protected:
     void FireFromInput(const FInputActionValue& Value);
     void Cursor(const FInputActionValue& Value);
 
-private:
-    /** Components **/
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-    class USpringArmComponent* SpringArmComp;
-
-    UPROPERTY(VisibleAnywhere, BlueprintReadOnly, Category = "Components", meta = (AllowPrivateAccess = "true"))
-    class UCameraComponent* CameraComp;
-
-    /** Input */
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-    class UInputMappingContext* DefaultMappingContext;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-    class UInputAction* MoveAction;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-    class UInputAction* TurnAction;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-    class UInputAction* FireAction;
-
-    UPROPERTY(EditAnywhere, BlueprintReadOnly, Category = Input, meta = (AllowPrivateAccess = "true"))
-    class UInputAction* CursorAction;
-
-    /** Parameters*/
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-    float Speed { 200.0f };
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Movement", meta = (AllowPrivateAccess = "true"))
-    float TurnRate { 100.0f };
-
-    UPROPERTY(EditAnywhere, BlueprintReadWrite, Category = "Input", meta = (AllowPrivateAccess = "true"))
-    float GamepadCursorSpeed { 10.0f };
-
+ private:
     APlayerController* TankPlayerController;
 
     bool bIsAlive { false };
+
+    bool bIsInitialized;
 };

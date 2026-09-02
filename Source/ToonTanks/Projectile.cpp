@@ -34,24 +34,28 @@ void AProjectile::BeginPlay()
 
 void AProjectile::OnHit(UPrimitiveComponent* HitComponent, AActor* OtherActor, UPrimitiveComponent* OtherComp, FVector NormalImpulse, const FHitResult& Hit)
 {
-    if (AActor* MyOwner = GetOwner()) {
-        AController* OwnerInstigator = Owner->GetInstigatorController();
-        UClass* DamageTypeClass = UDamageType::StaticClass();
+    AActor* MyOwner = GetOwner();
+    if (!IsValid(MyOwner)) {
+        Destroy();
+        return;
+    }
 
-        if (OtherActor && OtherActor != this && OtherActor != MyOwner) {
-            UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerInstigator, this, DamageTypeClass);
+    AController* OwnerInstigator = MyOwner->GetInstigatorController();
+    UClass* DamageTypeClass = UDamageType::StaticClass();
 
-            if (HitSound) {
-                UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
-            }
+    if (OtherActor && OtherActor != this && OtherActor != MyOwner) {
+        UGameplayStatics::ApplyDamage(OtherActor, Damage, OwnerInstigator, this, DamageTypeClass);
 
-            if (HitParticles) {
-                UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
-            }
+        if (HitSound) {
+            UGameplayStatics::PlaySoundAtLocation(this, HitSound, GetActorLocation());
+        }
 
-            if (HitCameraShakeClass) {
-                GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass);
-            }
+        if (HitParticles) {
+            UGameplayStatics::SpawnEmitterAtLocation(this, HitParticles, GetActorLocation(), GetActorRotation());
+        }
+
+        if (HitCameraShakeClass) {
+            GetWorld()->GetFirstPlayerController()->ClientStartCameraShake(HitCameraShakeClass);
         }
     }
 

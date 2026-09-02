@@ -23,6 +23,8 @@ protected:
 
     bool CanFire() const;
 
+    bool IsDestroyed() const;
+
 private:
     UPROPERTY(EditAnywhere, Category = "Combat", meta = (AllowPrivateAccess = "true"))
     float FireRange { 1000.0f };
@@ -30,7 +32,9 @@ private:
     UPROPERTY(EditAnywhere, Category = "Combat", meta = (AllowPrivateAccess = "true"))
     float FireRate { 2.0f };
 
-    class ATank* Tank;
+       ATank* Tank;
 
     FTimerHandle FireRateTimerHandle;
+
+    bool bIsDestroyed;
 };

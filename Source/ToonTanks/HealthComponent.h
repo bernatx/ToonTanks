@@ -20,9 +20,11 @@ protected:
 public:
     virtual void TickComponent(float DeltaTime, ELevelTick TickType, FActorComponentTickFunction* ThisTickFunction) override;
 
-private:
+ private:
     UFUNCTION()
     void DamageTaken(AActor* DamagedActor, float Damage, const class UDamageType* DamageType, class AController* InstigatedBy, AActor* DamageCauser);
+
+    float ClampedDamage(float Damage, float CurrentHealthVal);
 
 private:
     UPROPERTY(EditAnywhere)
